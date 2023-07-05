@@ -1,0 +1,166 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Email Login</title>
+    <style>
+        body {
+            background-color: #f1f1f1;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 40px;
+            background-color: #fff;
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .logo {
+            max-width: 150px;
+            max-height: 50px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .form-group button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .form-group button:hover {
+            background-color: #45a049;
+        }
+
+        .reset-button {
+            margin-top: 20px;
+        }
+
+        .reset-button button {
+            width: 100%;
+            padding: 10px;
+            background-color: #ccc;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .reset-button button:hover {
+            background-color: #aaa;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .button-container button {
+            width: 48%;
+            padding: 10px;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .button-container .login-button {
+            background-color: #4CAF50;
+        }
+
+        .button-container .login-button:hover {
+            background-color: #45a049;
+        }
+
+        .button-container .register-button {
+            background-color: #2196F3;
+        }
+
+        .button-container .register-button:hover {
+            background-color: #1e87db;
+        }
+
+        /* Additional styles for the password reset form */
+        .password-reset-container {
+            display: none;
+        }
+
+        .password-reset-container.show {
+            display: block;
+        }
+
+        .password-reset-container form {
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        // Function to toggle the display of the password reset form
+        function togglePasswordReset() {
+            var passwordResetContainer = document.querySelector('.password-reset-container');
+            passwordResetContainer.classList.toggle('show');
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <img class="logo" src="{% static 'email_app/email_logo.png' %}" alt="Email Logo">
+        <h2>Login to Email</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <button type="submit">Login</button>
+            </div>
+        </form>
+        <div class="button-container">
+            <button class="login-button" type="button" onclick="togglePasswordReset()">Forgot Password</button>
+            <button class="register-button" type="button" onclick="window.location.href='/register'">Register</button>
+        </div>
+        <!-- Password Reset Form -->
+        <div class="password-reset-container">
+            <h2>Reset Password</h2>
+            <form method="post" action="{% url 'password_reset' %}">
+                {% csrf_token %}
+                {{ password_reset_form.as_p }}
+                <button type="submit">Reset Password</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

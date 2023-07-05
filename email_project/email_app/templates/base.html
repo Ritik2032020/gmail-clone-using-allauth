@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Email App</title>
+    {% block css %}{% endblock %}
+</head>
+<body>
+    <div class="navbar">
+        <a href="{% url 'login' %}">Home</a>
+    </div>
+
+    {% block content %}{% endblock %}
+
+    {% block js %}{% endblock %}
+</body>
+</html>
